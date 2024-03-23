@@ -21,12 +21,12 @@ butInstall.addEventListener('click', async () => {
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt
     const choiceResult = await deferredPrompt.userChoice;
-    // Reset the deferredPrompt variable
-    deferredPrompt = null;
   });
 
 // Add a handler for the `appinstalled` event
 window.addEventListener('appinstalled', (event) => {
+    //Resets deffered prompt when installed
+    window.deferredPrompt = null;
     // The app was successfully installed
     console.log('App was installed.', event);
   });
