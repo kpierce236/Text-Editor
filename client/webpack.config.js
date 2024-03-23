@@ -19,7 +19,7 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: './index.html',
         chunks: ['main'], // Specify entry chunks to include in the HTML file
       }),
       new WebpackPwaManifest({
@@ -29,17 +29,19 @@ module.exports = () => {
         description: 'Just Another Text Editor ',
         background_color: '#ffffff',
         theme_color: '#2196f3',
+        start_url: './',
+        publicPath: './',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512], // multiple sizes for different devices
-            purpose: 'any maskable',
+            destination: path.join('assets', 'icons'),
           },
         ],
       }),
       new InjectManifest({
         swSrc: './src-sw.js', // Path to your service worker file
-        swDest: 'service-worker.js', // Output filename for the service worker
+        swDest: 'src-sw.js', // Output filename for the service worker
       }),
     ],
 
