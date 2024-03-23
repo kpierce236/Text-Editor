@@ -13,8 +13,17 @@ window.addEventListener('beforeinstallprompt', (event) => {
     butInstall.style.display = 'block';
   });
 
-// TODO: Implement a click event handler on the `butInstall` element
-butInstall.addEventListener('click', async () => {});
+// Implement a click event handler on the `butInstall` element
+butInstall.addEventListener('click', async () => {
+    // Hide the install button
+    butInstall.style.display = 'none';
+    // Show the install prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    const choiceResult = await deferredPrompt.userChoice;
+    // Reset the deferredPrompt variable
+    deferredPrompt = null;
+  });
 
 // TODO: Add an handler for the `appinstalled` event
 window.addEventListener('appinstalled', (event) => {});
