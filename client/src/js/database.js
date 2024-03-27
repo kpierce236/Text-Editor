@@ -15,12 +15,13 @@ const initdb = async () =>
 // TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => {
   try {
-    const db = await initdb();
-    const tx = db.transaction('jate', 'readwrite');
+    const jateDb = await openDB('jate', 1);
+    const tx = jateDb.transaction('jate', 'readwrite');
     const store = tx.objectStore('jate');
-    await store.add({ content });
-    await tx.done;
-    console.log('Content added to the database successfully');
+    const request = store.add({ content });
+    const result = await request;
+
+    console.log("Data saved to the database", result);
   } catch (error) {
     console.error('Error adding content to the database:', error);
   }
@@ -29,13 +30,14 @@ export const putDb = async (content) => {
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
   try {
-    const db = await initdb();
-    const tx = db.transaction('jate', 'readonly');
+    const jateDb = await openDB('jate', 1);
+    const tx = jateDb.transaction('jate', 'readonly');
     const store = tx.objectStore('jate');
-    const allContent = await store.getAll();
-    await tx.done;
-    console.log('Retrieved content from the database:', allContent);
-    return allContent;
+    const request = await store.getAll();
+    
+    console.log("result.value", request);
+    return request;
+
   } catch (error) {
     console.error('Error getting content from the database:', error);
     return null;
