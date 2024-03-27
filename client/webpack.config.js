@@ -20,10 +20,15 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
-        chunks: ['main'], // Specify entry chunks to include in the HTML file
+        title: "Text Editor", 
+      }),
+      new InjectManifest({
+        swSrc: './src-sw.js', // Path to your service worker file
+        swDest: 'src-sw.js', // Output filename for the service worker
       }),
       new WebpackPwaManifest({
-        filename: 'manifest.json',
+        fingerprints: false,
+        inject: 'true',
         name: 'J.A.T.E',
         short_name: 'JATE',
         description: 'Just Another Text Editor ',
@@ -39,12 +44,7 @@ module.exports = () => {
           },
         ],
       }),
-      new InjectManifest({
-        swSrc: './src-sw.js', // Path to your service worker file
-        swDest: 'src-sw.js', // Output filename for the service worker
-      }),
     ],
-
     module: {
       rules: [
         // CSS loader configuration
@@ -60,6 +60,10 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: [
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/transform-runtime",
+              ],
             },
           },
         },
